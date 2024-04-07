@@ -108,7 +108,7 @@ admin-app/
 Parent-child relation between company and user documents.
 
 ```
-{
+    {
         "mappings": {
             "_routing": {
                 "required": true
