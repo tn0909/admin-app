@@ -1,0 +1,84 @@
+<h2>Companies</h2>
+<div class="mt-4">
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Search company by name, address or description"
+            [(ngModel)]="searchParams.searchTerm">
+        <button class="btn btn-primary" type="button" (click)="searchCompanies()">Search</button>
+    </div>
+
+    <!-- Include users checkbox -->
+    <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" id="includeUsers" [(ngModel)]="searchParams.includeUsers">
+        <label class="form-check-label" for="includeUsers">
+            Include users in results
+        </label>
+    </div>
+
+    <!-- Company List Table -->
+    <table class="table table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th width="25%">Name</th>
+                <th width="25%">Website</th>
+                <th width="25%">Address</th>
+                <th width="25%">Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngIf="companies.length > 0; else noResults">
+                <ng-container *ngFor="let company of companies">
+                    <tr class="table-light">
+                        <td>{{ company.name }}</td>
+                        <td>
+                            <a href="{{ company.website }}" target="_blank">{{ company.website }}</a>
+                        </td>
+                        <td>{{ company.address }}</td>
+                        <td>{{ company.description }}</td>
+                    </tr>
+                    <ng-container *ngIf="searchParams.includeUsers && company.users && company.users.length > 0">
+                        <tr>
+                            <td colspan="4">
+                                <table class="table table-borderless table-hover caption-top mb-0 small">
+                                    <caption>List of users</caption>
+                                    <thead>
+                                        <tr class="border-bottom">
+                                            <th width="25%">First Name</th>
+                                            <th width="25%">Last Name</th>
+                                            <th width="25%">Email</th>
+                                            <th width="25%">Title</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let user of company.users">
+                                            <td>{{ user.firstName }}</td>
+                                            <td>{{ user.lastName }}</td>
+                                            <td>{{ user.email }}</td>
+                                            <td>{{ user.title }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </ng-container>
+
+                </ng-container>
+
+            </ng-container>
+
+        </tbody>
+    </table>
+
+    <!-- No Results Message -->
+    <ng-template #noResults>
+        <tr>
+            <td colspan="4">
+                No results found
+            </td>
+        </tr>
+    </ng-template>
+
+    <!-- Create Company Button -->
+    <div class="mb-3">
+        <button class="btn btn-primary" (click)="createCompany()">Create New Company</button>
+    </div>
+</div>

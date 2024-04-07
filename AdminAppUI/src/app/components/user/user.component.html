@@ -1,0 +1,49 @@
+<h2>Users</h2>
+
+<div class="mt-4">
+
+    <!-- Search User -->
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" [(ngModel)]="searchParams.company" placeholder="Search by company">
+        <input type="text" class="form-control" [(ngModel)]="searchParams.email" placeholder="Search by email">
+        <button class="btn btn-primary" (click)="searchUsers()">Search</button>
+    </div>
+
+    <!-- Display Users -->
+    <table class="table table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th class="col-sm-1">First Name</th>
+                <th class="col-sm-1">Last Name</th>
+                <th class="col-sm-1">Email</th>
+                <th class="col-sm-1">Title</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngIf="users.length > 0; else noResults">
+                <tr *ngFor="let user of users">
+                    <td>{{ user.firstName }}</td>
+                    <td>{{ user.lastName }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.title }}</td>
+                </tr>
+            </ng-container>
+
+        </tbody>
+    </table>
+
+    <!-- No Results Message -->
+    <ng-template #noResults>
+        <tr>
+            <td colspan="4">
+                No results found
+            </td>
+        </tr>
+    </ng-template>
+
+    <!-- Create User Button -->
+    <div class="mb-3">
+        <button class="btn btn-primary" (click)="createUser()">Create New User</button>
+    </div>
+
+</div>
