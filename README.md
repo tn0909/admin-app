@@ -22,6 +22,23 @@ This project is a full-stack application designed to create and search companies
 - Search companies by name, description, or address
 - Search users by email, associated company, or both
 
+### Screenshots
+
+1. Create a new company
+![Create a new company](https://github.com/tn0909/tn0909/blob/master/Screenshots/AdminApp/Create%20Company.png)
+
+2. Create a new user
+![Create user](https://github.com/tn0909/tn0909/blob/master/Screenshots/AdminApp/Create%20User.png)
+
+3. Search companies
+![Search companies](https://github.com/tn0909/tn0909/blob/master/Screenshots/AdminApp/Search%20Companies.png)
+
+4. Search companies and include users in the result
+![Search companies with users](https://github.com/tn0909/tn0909/blob/master/Screenshots/AdminApp/Search%20Companies%20including%20Users.png)
+
+5. Search users
+![Search users](https://github.com/tn0909/tn0909/blob/master/Screenshots/AdminApp/Search%20Users%20by%20company.png)
+
 ## Prerequisites
 
 - .NET SDK
