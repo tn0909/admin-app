@@ -12,8 +12,6 @@ This project is a full-stack application designed to create and search companies
   - [Setting up the Frontend](#setting-up-the-frontend)
 - [Elasticsearch Mapping](#elasticsearch-mapping)
 - [API Endpoints](#api-endpoints)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
@@ -52,15 +50,13 @@ This project is a full-stack application designed to create and search companies
 
 ```plaintext
 admin-app/
-├── AdminApp/
+├── AdminApp/        --> API project
 │   ├── Controllers/
 │   ├── Dtos/
-│   ├── Extensions/
 │   ├── Models/
-│   ├── Profiles/
 │   ├── Services/
 │   └── ...
-└── AdminAppUi/
+└── AdminAppUi/      --> UI project
     ├── src/
     │   ├── app/
     │   │   ├── components/
@@ -249,7 +245,10 @@ POST /api/users/search
 ```
 
 ## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+Contributions are welcome! If you have suggestions for improving the API or adding new features, please open an issue to discuss or submit a pull request with your changes.
 
 ## License
-This project is licensed under the MIT License - see the LICENSE.md file for details.
+Please credit the author if you use this project or any of its components in your own work.
+
+## Acknowledgments
+Libraries and frameworks used
