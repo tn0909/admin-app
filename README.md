@@ -43,12 +43,12 @@ This project is a full-stack application designed to create and search companies
 
 - .NET SDK
 - Node.js and npm
-- Docker (for running Elasticsearch)
+- Docker
 - Visual Studio Code
 
 ## Getting Started
 
-## Folder Structure
+### Folder Structure
 
 ```plaintext
 admin-app/
@@ -72,31 +72,38 @@ admin-app/
 
 ### Setting up the Backend
 
-1. Clone the repository:
+1. Start Elasticsearch container:
+   ```bash
+   docker run -d --name elasticsearch \
+    -p 9200:9200 -p 9300:9300 \
+    -e "discovery.type=single-node" \
+    docker.elastic.co/elasticsearch/elasticsearch:7.17.0
+   ```
+3. Clone the repository:
 
     ```bash
     git clone https://github.com/tn0909/admin-app.git
     ```
 
-2. Navigate to the ASP.NET Web API project:
+4. Navigate to the ASP.NET Web API project:
 
     ```bash
     cd admin-app/AdminApp
     ```
 
-3. Restore the NuGet packages:
+5. Restore the NuGet packages:
 
     ```bash
     dotnet restore
     ```
 
-4. Run the API:
+6. Run the API:
 
     ```bash
     dotnet run
     ```
 
-5. The API will be accessible at `http://localhost:5076`.
+7. The API will be accessible at `http://localhost:5076`.
 
 ### Setting up the Frontend
 
@@ -157,7 +164,6 @@ Parent-child relation between company and user documents.
         }
     }
 ```
-
 
 ## API Endpoints
 
