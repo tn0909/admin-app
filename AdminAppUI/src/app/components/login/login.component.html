@@ -1,0 +1,23 @@
+<div class="row justify-content-center mt-5">
+    <div class="col-md-4">
+        <h2>Login</h2>
+
+        <div class="alert alert-danger" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+        <form (ngSubmit)="login()">
+            <div class="mb-3">
+                <label class="form-label" for="username">Username</label>
+                <input type="text" id="username" class="form-control" name="username"
+                    [(ngModel)]="credentials.username" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="password">Password</label>
+                <input type="password" id="password" class="form-control" name="password"
+                    [(ngModel)]="credentials.password" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+    </div>
+</div>

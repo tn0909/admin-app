@@ -10,7 +10,9 @@ This project is a full-stack application designed to create and search companies
   - [Folder Structure](#folder-structure)
   - [Setting up the Backend](#setting-up-the-backend)
   - [Setting up the Frontend](#setting-up-the-frontend)
+  - [Running Tests](#running-tests)
 - [Elasticsearch Mapping](#elasticsearch-mapping)
+- [Authentication](#authentication)
 - [API Endpoints](#api-endpoints)
 
 ## Features
@@ -51,12 +53,16 @@ This project is a full-stack application designed to create and search companies
 ```plaintext
 admin-app/
 ├── AdminApp/        --> API project
+│   ├── Auth/
 │   ├── Controllers/
 │   ├── Dtos/
+│   ├── Extensions/
 │   ├── Models/
+│   ├── Profiles/
 │   ├── Services/
 │   └── ...
-└── AdminAppUi/      --> UI project
+├── AdminApp.Tests/  --> API test project (xUnit)
+└── AdminAppUI/       --> UI project
     ├── src/
     │   ├── app/
     │   │   ├── components/
@@ -123,6 +129,19 @@ admin-app/
 
 4. The app will be accessible at `http://localhost:4200`.
 
+### Running Tests
+
+Backend (xUnit, from the repo root):
+```bash
+dotnet test AdminApp.Tests
+```
+
+Frontend (Karma/Jasmine):
+```bash
+cd AdminAppUI
+npm test
+```
+
 ## Elasticsearch Mapping
 
 Parent-child relation between company and user documents.
@@ -161,6 +180,27 @@ Parent-child relation between company and user documents.
     }
 ```
 
+## Authentication
+
+All `/api/companies` and `/api/users` endpoints require a JWT bearer token. Obtain one via:
+
+```
+POST /api/auth/login
+{
+  "username": "string",
+  "password": "string"
+}
+
+// Response
+{
+  "token": "string"
+}
+```
+
+Send the token on subsequent requests: `Authorization: Bearer <token>`.
+
+Credentials and signing key are configured under the `Auth` section (`AdminUsername`, `AdminPasswordHash`, `JwtSecret`, `JwtIssuer`, `JwtAudience`, `JwtExpiryMinutes`). `appsettings.Development.json` ships dev-only defaults (`admin` / `ChangeMe123!`). For any non-development environment, override every `Auth` value via environment variables (e.g. `Auth__JwtSecret`, `Auth__AdminPasswordHash`) rather than committing real credentials — generate `AdminPasswordHash` with `AdminApp.Auth.PasswordHasher.Hash(password)`.
+
 ## API Endpoints
 
 The API documentation is available at `http://localhost:5076/swagger/index.html`. Use this interface to explore available endpoints and test API functionality.
@@ -176,7 +216,22 @@ POST /api/companies
 }
 ```
 
-2. Search companies by name, address or description (full-text), return all if no search term is specified
+2. Get a company by id
+```
+GET /api/companies/{id}
+
+// Response
+{
+  "id": "string",
+  "name": "string",
+  "description": "string",
+  "address": "string",
+  "website": "string",
+  "users": [ ... ]
+}
+```
+
+3. Search companies by name, address or description (full-text), return all if no search term is specified
 ```
 // Request
 POST /api/companies/search
@@ -209,7 +264,7 @@ POST /api/companies/search
 ]
 ```
 
-3. Create a user
+4. Create a user
 ```
 POST /api/users
 {
@@ -221,7 +276,22 @@ POST /api/users
 }
 ```
 
-4. Search users by company or email, return all if no search params is specified
+5. Get a user by id
+```
+GET /api/users/{id}
+
+// Response
+{
+  "id": "string",
+  "email": "string",
+  "firstName": "string",
+  "lastName": "string",
+  "title": "string",
+  "companyId": "string"
+}
+```
+
+6. Search users by company or email, return all if no search params is specified
 ```
 // Request
 POST /api/users/search

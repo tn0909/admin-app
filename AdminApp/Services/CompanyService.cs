@@ -1,5 +1,6 @@
 
 using AdminApp.Dtos;
+using AdminApp.Extensions;
 using AdminApp.Models;
 using AutoMapper;
 using Nest;
@@ -43,12 +44,14 @@ namespace AdminApp.Services
 
         private async Task<IEnumerable<CompanyResponseDto>> SearchWithUsers(SearchCompanyDto searchParams)
         {
+            var escapedSearchTerm = LuceneQueryEscaper.Escape(searchParams.SearchTerm);
+
             var response = await _elasticClient.SearchAsync<Company>(x => x
                 .Query(q => q
                     .Bool(b => b
-                        .Must(m => 
+                        .Must(m =>
                             m.Term(c => c.JoinField, "parent")
-                            && m.QueryString(d => d.Query('*' + searchParams.SearchTerm + '*'))
+                            && m.QueryString(d => d.Query('*' + escapedSearchTerm + '*'))
                         )
                         .Should(s => s
                             .HasChild<User>(c => c
@@ -81,11 +84,13 @@ namespace AdminApp.Services
 
         private async Task<IEnumerable<CompanyResponseDto>> SearchWithoutUsers(SearchCompanyDto searchParams)
         {
+            var escapedSearchTerm = LuceneQueryEscaper.Escape(searchParams.SearchTerm);
+
             var response = await _elasticClient.SearchAsync<Company>(x => x
                                 .Query(q =>
                                     q.Term(c => c.JoinField, "parent")
                                     && q.QueryString(d => d
-                                        .Query('*' + searchParams.SearchTerm + '*'))
+                                        .Query('*' + escapedSearchTerm + '*'))
                                 )
                                 .Size(searchParams.Limit)
                             );
