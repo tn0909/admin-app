@@ -1,5 +1,6 @@
 ﻿using AdminApp.Services;
 using AdminApp.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -9,6 +10,7 @@ namespace AdminApp.Controllers
 {
     [Route("api/companies")]
     [ApiController]
+    [Authorize]
     public class CompanyController : ControllerBase
     {
         private readonly ICompanyService _companyService;

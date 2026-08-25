@@ -161,6 +161,27 @@ Parent-child relation between company and user documents.
     }
 ```
 
+## Authentication
+
+All `/api/companies` and `/api/users` endpoints require a JWT bearer token. Obtain one via:
+
+```
+POST /api/auth/login
+{
+  "username": "string",
+  "password": "string"
+}
+
+// Response
+{
+  "token": "string"
+}
+```
+
+Send the token on subsequent requests: `Authorization: Bearer <token>`.
+
+Credentials and signing key are configured under the `Auth` section (`AdminUsername`, `AdminPasswordHash`, `JwtSecret`, `JwtIssuer`, `JwtAudience`, `JwtExpiryMinutes`). `appsettings.Development.json` ships dev-only defaults (`admin` / `ChangeMe123!`). For any non-development environment, override every `Auth` value via environment variables (e.g. `Auth__JwtSecret`, `Auth__AdminPasswordHash`) rather than committing real credentials — generate `AdminPasswordHash` with `AdminApp.Auth.PasswordHasher.Hash(password)`.
+
 ## API Endpoints
 
 The API documentation is available at `http://localhost:5076/swagger/index.html`. Use this interface to explore available endpoints and test API functionality.

@@ -1,5 +1,6 @@
 
 using AdminApp.Dtos;
+using AdminApp.Extensions;
 using AdminApp.Models;
 using AutoMapper;
 using Nest;
@@ -46,12 +47,14 @@ namespace AdminApp.Services
                     
                     if (!string.IsNullOrEmpty(searchParams.Company))
                     {
+                        var escapedCompany = LuceneQueryEscaper.Escape(searchParams.Company);
+
                         queryContainer &= q
                             .HasParent<Company>(c => c
                                 .ParentType("parent")
                                 .Query(q1 => q1
                                     .QueryString(d => d
-                                        .Query('*' + searchParams.Company + '*')
+                                        .Query('*' + escapedCompany + '*')
                                     )
                                 )
                             );
